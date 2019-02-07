@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models.signals import pre_save
 from django.shortcuts import reverse
+from django.db.models import Q
 import random
 import os
 from .utils import unique_slug_generator
@@ -26,6 +27,12 @@ class ProductQuerySet(models.query.QuerySet):
     def featured(self):
         return self.filter(featured=True, active=True)
 
+    def search(self, query):
+        lookups = (Q(title__contains=query)
+                   | Q(description__icontains=query)
+                   | Q(price__icontains=query))
+        return self.filter(lookups).distinct()
+
 
 class ProductManager(models.Manager):
     def get_queryset(self):
@@ -43,6 +50,10 @@ class ProductManager(models.Manager):
             return qs.first()
         return None
 
+    def search(self, query):
+        lookups = Q(title__contains=query) | Q(description__icontains=query)
+        return self.get_queryset().active().filter(lookups).distinct()
+
 
 class Product(models.Model):
     title = models.CharField(max_length=120)
@@ -52,6 +63,7 @@ class Product(models.Model):
     image = models.ImageField(upload_to=upload_image_path, null=True, blank=True)
     featured = models.BooleanField(default=False)
     active = models.BooleanField(default=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
 
     objects = ProductManager()
 
