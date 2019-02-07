@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models.signals import pre_save
+from django.shortcuts import reverse
 import random
 import os
 from .utils import unique_slug_generator
@@ -56,6 +57,9 @@ class Product(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('products:product_slug_detail', kwargs={'slug': self.slug})
 
 
 def product_pre_save_receiver(sender, instance, *args, **kwargs):

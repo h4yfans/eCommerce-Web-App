@@ -22,8 +22,3 @@ def unique_slug_generator(instance, new_slug=None):
         )
         return unique_slug_generator(instance, new_slug=new_slug)
     return slug
-
-
-print(random_string_generator())
-
-print(random_string_generator(size=50))
