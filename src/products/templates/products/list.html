@@ -1,20 +1,13 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block content %}
-    <div class="container">
-        <div class="row">
-            {% for object in object_list %}
-                <div class="col">
-                    {{ forloop.counter }}
-                    {% include 'products/snippets/card.html' with instance=object %}
-                    {% if forloop.counter|divisibleby:2 %}
-                        </div></div><div class="row">
-                    {% else %}
-                        </div>
-                    {% endif %}
+        <div class='row'>
 
-                </div>
-            {% endfor %}
-    </div>
-    </div>
+    {% for obj in object_list %}
+        <div class='col my-3'>
+        {% include 'products/snippets/card.html' with instance=obj %}
+
+        </div>
+    {% endfor %}
+</div>
 {% endblock %}
