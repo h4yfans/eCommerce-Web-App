@@ -4,7 +4,7 @@ from django.shortcuts import reverse
 from django.db.models import Q
 import random
 import os
-from .utils import unique_slug_generator
+from ecommerce.utils import unique_slug_generator
 
 
 def upload_image_path(instance, filename):
