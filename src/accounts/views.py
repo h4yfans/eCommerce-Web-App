@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 from django.utils.http import is_safe_url
 
-from accounts.forms import LoginForm
+from accounts.forms import LoginForm,RegisterForm
 
 
 def login_page(request):
@@ -27,7 +27,7 @@ def login_page(request):
 
 
 def register_page(request):
-    form = LoginForm(request.POST or None)
+    form = RegisterForm(request.POST or None)
     if form.is_valid():
         print(form.cleaned_data)
-    return render(request, 'accounts/register.html', {})
+    return render(request, 'accounts/register.html', {'form': form})
