@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.conf import settings
 from django.db.models.signals import post_save
 from accounts.models import GuestEmail
 
@@ -24,7 +24,7 @@ class BillingProfileManager(models.Manager):
 
 
 class BillingProfile(models.Model):
-    user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.CASCADE)
     email = models.EmailField()
     active = models.BooleanField(default=True)
     update = models.DateTimeField(auto_now=True)
@@ -48,4 +48,4 @@ def user_created_receiver(sender, instance, created, *args, **kwargs):
         BillingProfile.objects.get_or_create(user=instance, email=instance.email)
 
 
-post_save.connect(user_created_receiver, sender=User)
+post_save.connect(user_created_receiver, sender=settings.AUTH_USER_MODEL)
