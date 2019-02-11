@@ -42,18 +42,21 @@
                 </div>
                 <div class="col-6">
                     {% url 'checkout_address_reuse' as checkout_address_reuse %}
-                    {% include 'addresses/snippets/prev_addresses.html' with address_qs=address_qs ext_url=request.build_absolute_uri action_url=checkout_address_reuse%}
+                    {% include 'addresses/snippets/prev_addresses.html' with address_qs=address_qs ext_url=request.build_absolute_uri action_url=checkout_address_reuse %}
                 </div>
             </div>
         {% else %}
             <h1>Finalize Checkout</h1>
-
+            <p>Cart Items: {% for product in object.cart.products.all %}{{ product }} {% if not forloop.last %},
+            {% endif %}{% endfor %}</p>
+            <p>Shipping Address: {{ object.shipping_address.get_address }}</p>
+            <p>Billing Address: {{ object.billing_address.get_address }}</p>
             <p>Cart Total: {{ object.cart.total }}</p>
             <p>Shipping Total: {{ object.shipping_total }}</p>
             <p>Order Total: {{ object.total }}</p>
             <form class="form" method="POST" action="">
                 {% csrf_token %}
-                <button type="submit">Checkout</button>
+                <button type="submit" class="btn btn-success">Checkout</button>
             </form>
         {% endif %}
     {% endif %}

@@ -75,3 +75,7 @@ def checkout_home(request):
         'address_qs': address_qs,
     }
     return render(request, 'carts/checkout.html', context)
+
+
+def checkout_done_view(request):
+    return render(request, 'carts/checkout-done.html', {})
