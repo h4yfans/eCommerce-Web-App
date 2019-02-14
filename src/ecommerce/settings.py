@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'analytics',
 ]
 
-AUTH_USER_MODEL = 'accounts.User' #change the built-in user model to ours
+AUTH_USER_MODEL = 'accounts.User'  # change the built-in user model to ours
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -122,6 +122,8 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
+FORCE_SESSION_TO_ONE = False
+FORCE_INACTIVE_USER_ENDSESSION = False
 
 STATIC_URL = '/static/'
 
