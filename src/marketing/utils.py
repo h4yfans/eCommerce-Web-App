@@ -12,11 +12,11 @@ MAILCHIMP_EMAIL_LIST_ID = getattr(settings, 'MAILCHIMP_EMAIL_LIST_ID', None)
 def check_email(email):
     if not re.match(r".+@.+\..+", email):
         raise ValueError('String passed is not a valid email address')
-    return
+    return email
 
 
 def get_subscriber_hash(member_email):
-    # check email
+    check_email(member_email)
     member_email = member_email.lower().encode()
     m = hashlib.md5(member_email)
     return m.hexdigest()
@@ -43,13 +43,13 @@ class Mailchimp(object):
             'status': self.check_valid_status(status)
         }
         r = requests.put(endpoint, auth=("", self.key), data=json.dumps(data))
-        return r.json()
+        return r.status_code, r.json()
 
     def check_subscription_status(self, email):
         hashed_email = get_subscriber_hash(email)
         endpoint = self.get_members_endpoint() + '/' + hashed_email
         r = requests.get(endpoint, auth=("", self.key))
-        return r.json()
+        return r.status_code, r.json()
 
     def check_valid_status(self, status):
         choices = ['subscribed', 'unsubscribed', 'cleaned', 'pending']
