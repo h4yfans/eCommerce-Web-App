@@ -107,3 +107,4 @@ venv.bak/
 .mypy_cache/
 /.idea
 static_cdn
+/src/ecommerce/settings/local.py
