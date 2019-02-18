@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'billing',
     'addresses',
     'analytics',
+    'marketing'
 ]
 
 AUTH_USER_MODEL = 'accounts.User'  # change the built-in user model to ours
@@ -124,6 +125,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 FORCE_SESSION_TO_ONE = False
 FORCE_INACTIVE_USER_ENDSESSION = False
+
+MAILCHIMP_API_KEY = "de038a38cec8ea6e755d07378c236492-us15"
+MAILCHIMP_DATA_CENTER = "us15"
+MAILCHIMP_EMAIL_LIST_ID = "22781ec8d5"
 
 STATIC_URL = '/static/'
 
