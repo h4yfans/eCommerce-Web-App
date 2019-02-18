@@ -6,7 +6,7 @@ from django.urls import path, include
 
 from accounts.views import guest_register_view, RegisterView, LoginView
 from addresses.views import checkout_address_create_view, checkout_address_reuse_view
-from marketing.views import MarketingPreferenceUpdateView
+from marketing.views import MarketingPreferenceUpdateView, MailchimpWebhookView
 from .views import home_page, about_page, contact_page
 
 urlpatterns = [
@@ -24,6 +24,7 @@ urlpatterns = [
     path('products/', include('products.urls', namespace='products')),
     path('search/', include('search.urls', namespace='search')),
     path('settings/email/', MarketingPreferenceUpdateView.as_view(), name='marketing-pref'),
+    path('webhooks/mailchimp/', MailchimpWebhookView.as_view(), name='webhooks-mailchimp'),
 ]
 
 if settings.DEBUG:
